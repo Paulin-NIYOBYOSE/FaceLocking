@@ -1,8 +1,6 @@
 # Face Locking System
 
-Real-time face tracking that locks onto a specific person and detects their actions (blinking, smiling, head movements).
-
----
+## Real-time face tracking that locks onto a specific person and detects their actions (blinking, smiling, head movements).
 
 ## Quick Setup
 

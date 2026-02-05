@@ -1,21 +1,13 @@
 #!/usr/bin/env python3
-"""
-Face Locking System - Main Entry Point
-Simple usage: python3 main.py
-"""
-
 import os
 import sys
 
 
 def get_python_command():
-    """Get the correct Python command for this system."""
-    # Use the same Python that's running this script
     return sys.executable
 
 
 def list_enrolled_identities():
-    """List all enrolled identities."""
     identities_dir = "data/identities"
     if not os.path.exists(identities_dir):
         return []
@@ -26,14 +18,12 @@ def list_enrolled_identities():
 
 
 def main():
-    """Main entry point."""
     python_cmd = get_python_command()
     
     print("\n" + "=" * 60)
     print("FACE LOCKING SYSTEM")
     print("=" * 60)
     
-    # Check for enrolled identities
     identities = list_enrolled_identities()
     
     if not identities:
@@ -42,7 +32,6 @@ def main():
         print("=" * 60)
         os.system(f"{python_cmd} live_enroll.py")
         
-        # Check again after enrollment
         identities = list_enrolled_identities()
         if not identities:
             print("\n✗ Enrollment failed or cancelled.")
@@ -60,27 +49,19 @@ def main():
     choice = input("\nChoice (1-3): ").strip()
     
     if choice == "1":
-        print("\n" + "=" * 60)
-        print("Starting Face Locking System...")
-        print("=" * 60 + "\n")
+        print("\nStarting Face Locking System...\n")
         os.system(f"{python_cmd} -m src.run_pipeline")
     
     elif choice == "2":
-        print("\n" + "=" * 60)
-        print("Starting Live Enrollment...")
-        print("=" * 60 + "\n")
+        print("\nStarting Live Enrollment...\n")
         os.system(f"{python_cmd} live_enroll.py")
         
-        # After enrollment, ask if they want to test
-        print("\n" + "=" * 60)
-        test = input("Start face locking now? (yes/no): ").strip().lower()
+        test = input("\nStart face locking now? (yes/no): ").strip().lower()
         if test == "yes":
             os.system(f"{python_cmd} -m src.run_pipeline")
     
     elif choice == "3":
-        print("\n✓ Goodbye!")
-        print("=" * 60 + "\n")
-    
+        print("\n✓ Goodbye!\n")
     else:
         print("\n✗ Invalid choice.")
 
@@ -89,6 +70,5 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n✗ Interrupted by user")
-        print("=" * 60 + "\n")
+        print("\n\n✗ Interrupted by user\n")
         sys.exit(0)

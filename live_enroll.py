@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
-"""
-Live Face Enrollment System
-Captures face images from webcam, enrolls identity, and immediately tests locking.
-"""
-
 import os
 import sys
 import time
 from typing import List
-
 import cv2
 import numpy as np
-
 from src.camera import camera_stream
 from src.detect import detect_faces
 from src.align import align_face
@@ -21,7 +14,6 @@ from src.utils import ensure_dir
 
 
 class LiveEnrollmentCapture:
-    """Captures face images from live camera for enrollment."""
     
     def __init__(self, target_samples: int = 5):
         self.target_samples = target_samples
@@ -30,12 +22,6 @@ class LiveEnrollmentCapture:
         self.cooldown_frames = 15  # ~0.5 seconds at 30fps
         
     def capture_frame(self, frame: cv2.Mat, boxes: List) -> bool:
-        """
-        Attempt to capture a frame for enrollment.
-        
-        Returns:
-            True if frame was captured, False otherwise
-        """
         if self.capture_cooldown > 0:
             self.capture_cooldown -= 1
             return False
@@ -43,22 +29,18 @@ class LiveEnrollmentCapture:
         if len(boxes) != 1:
             return False
         
-        # Capture the frame
         self.captured_frames.append(frame.copy())
         self.capture_cooldown = self.cooldown_frames
         return True
     
     def is_complete(self) -> bool:
-        """Check if we have enough samples."""
         return len(self.captured_frames) >= self.target_samples
     
     def get_progress(self) -> tuple:
-        """Get current progress (captured, target)."""
         return len(self.captured_frames), self.target_samples
 
 
 def draw_capture_ui(frame: cv2.Mat, progress: tuple, boxes: List, message: str = "") -> None:
-    """Draw capture interface on frame."""
     height, width = frame.shape[:2]
     captured, target = progress
     
