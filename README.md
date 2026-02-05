@@ -2,8 +2,6 @@
 
 Real-time face tracking that locks onto a specific person and detects their actions (blinking, smiling, head movements).
 
-**📖 See [GUIDE.md](GUIDE.md) for quick start guide**
-
 ---
 
 ## Quick Setup
